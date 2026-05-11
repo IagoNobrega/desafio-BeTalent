@@ -17,6 +17,28 @@
 
 Este projeto implementa uma suite completa de testes automatizados para validar duas aplicações distintas:
 
+### Links oficiais do desafio
+
+Os testes deste projeto devem ser executados contra estes ambientes:
+
+| Tipo de teste | Link utilizado |
+|---------------|----------------|
+| API | https://restful-booker.herokuapp.com/apidoc/index.html |
+| API base URL usada no código | https://restful-booker.herokuapp.com |
+| UI/UX | https://www.saucedemo.com/ |
+
+No código, a UI usa `UI_BASE_URL` com default `https://www.saucedemo.com`.
+A API usa `API_BASE_URL` com default `https://restful-booker.herokuapp.com`.
+
+### Premissas e Limitações
+
+- Os testes validam ambientes externos públicos: SauceDemo e Restful-Booker.
+- Falhas causadas por instabilidade, mudança de comportamento ou indisponibilidade desses ambientes são registradas como risco/bug quando reproduzíveis.
+- Os bugs encontrados nas aplicações testadas não são corrigidos neste repositório, pois o escopo é análise e automação de testes.
+- Evidências de UI são geradas em screenshots, vídeos de falha e relatório HTML do Playwright.
+- Evidências de API são geradas no relatório JSON em `api-testing/evidence/api-test-report.json`.
+- Pendências conhecidas estão documentadas em `docs/BUG-ANALYSIS.md`, `docs/RISKS-ANALYSIS.md` e `docs/IMPROVEMENTS.md`.
+
 ### **UI Testing - Sauce Demo**
 Plataforma de e-commerce com testes de:
 - ✅ Autenticação (múltiplos tipos de usuários)
@@ -33,8 +55,41 @@ Sistema de reservas com testes de:
 - ✅ CRUD de reservas (Create, Read, Update, Delete)
 - ✅ Filtros e buscas avançadas
 - ✅ Validação de campos obrigatórios
+- ✅ Testes de performance
+- ✅ Testes de segurança
 - ✅ Tratamento de erros
 - ✅ Health check da API
+
+---
+
+## Níveis de Implementação
+
+### UI Testing (Sauce Demo)
+
+**Nível 1 (Obrigatório)**
+- Login com diferentes tipos de usuários
+- Ordenação e filtragem de produtos
+- Fluxo completo de compra
+- Remoção de itens do carrinho
+- Navegação entre páginas
+- Logout
+
+**Nível 2 (Diferencial)**
+- Testes de responsividade
+- Testes de acessibilidade
+- Testes automatizados
+
+### API Testing (Restful-Booker)
+
+**Nível 1 (Obrigatório)**
+- Autenticação básica
+- CRUD de reservas
+- Validação de campos obrigatórios
+
+**Nível 2 (Diferencial)**
+- Testes de performance
+- Testes de segurança
+- Automação via scripts
 
 ---
 
@@ -177,6 +232,22 @@ npm run test:all
 
 ## 📊 Documentação Detalhada
 
+### Estrutura da documentação
+
+**UI Testing**
+- Plano de testes: `docs/UI-TEST-PLAN.md`
+- Casos de teste com resultados: `docs/UI-TEST-PLAN.md` e `test-results/ui-report/`
+- Análise de bugs: `docs/BUG-ANALYSIS.md`
+- Sugestões de melhorias: `docs/IMPROVEMENTS.md`
+- Análise de riscos: `docs/RISKS-ANALYSIS.md`
+
+**API Testing**
+- Collection de requests: `api-testing/collections/Restful-Booker.postman_collection.json`
+- Documentação dos cenários: `docs/API-TEST-PLAN.md`
+- Resultados dos testes: `api-testing/evidence/api-test-report.json`
+- Análise de bugs: `docs/BUG-ANALYSIS.md`
+- Variáveis de ambiente: `api-testing/environment/Restful-Booker.postman_environment.json`
+
 ### 📋 [Plano de Testes de UI](./docs/UI-TEST-PLAN.md)
 - Casos de teste detalhados
 - Resultados esperados
@@ -247,9 +318,11 @@ npm run test:all
 | Validações | 3 |
 | Filtros e Buscas | 3 |
 | Health Check | 1 |
-| **Total** | **14** |
+| Segurança | 1 |
+| Performance | 1 |
+| **Total** | **16** |
 
-**Total de Testes: 67 (53 UI + 14 API)**
+**Total de Testes: 69 (53 UI + 16 API)**
 
 ---
 
@@ -301,8 +374,8 @@ Os testes são estruturados com comentários BDD:
 - [x] Validação de campos obrigatórios
 
 ### Nível 2 (Diferencial) - API Testing
-- [x] Testes de validação avançada
-- [x] Testes de filtros e paginação
+- [x] Testes de performance
+- [x] Testes de segurança
 - [x] Automação via scripts JavaScript
 
 ### Requisitos Técnicos
@@ -358,7 +431,7 @@ Projeto criado em: **15 de Janeiro de 2024**
 
 ## 🎯 Métricas Iniciais
 
-- **Total de Testes Planejados**: 67
+- **Total de Testes Planejados**: 69
 - **Abordagem**: BDD com Playwright e JavaScript
 - **Cobertura**: Nível 1 + Nível 2
 - **Documentação**: Completa em Markdown

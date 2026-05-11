@@ -3,17 +3,18 @@ const { defineConfig, devices } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './ui-testing/specs',
+  outputDir: 'test-results/ui-artifacts',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: [
-    ['html', { outputFolder: 'test-results/ui-testing' }],
-    ['json', { outputFile: 'test-results/ui-testing/results.json' }],
-    ['junit', { outputFile: 'test-results/ui-testing/results.xml' }]
+    ['html', { outputFolder: 'test-results/ui-report' }],
+    ['json', { outputFile: 'test-results/ui-report/results.json' }],
+    ['junit', { outputFile: 'test-results/ui-report/results.xml' }]
   ],
   use: {
-    baseURL: 'https://www.saucedemo.com',
+    baseURL: process.env.UI_BASE_URL || 'https://www.saucedemo.com',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -43,10 +44,4 @@ module.exports = defineConfig({
       use: { ...devices['iPhone 12'] },
     },
   ],
-
-  webServer: {
-    command: 'npm run dev',
-    url: 'http://127.0.0.1:3000',
-    reuseExistingServer: !process.env.CI,
-  },
 });

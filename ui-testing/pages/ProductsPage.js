@@ -116,12 +116,20 @@ class ProductsPage extends BasePage {
   }
 
   /**
+   * Volta do carrinho para a página de produtos
+   */
+  async continueShopping() {
+    await this.click('[data-test="continue-shopping"]');
+    await this.page.waitForSelector(this.productsContainer, { timeout: 10000 });
+  }
+
+  /**
    * Faz logout
    */
   async logout() {
     await this.click(this.menuButton);
     await this.click(this.logoutButton);
-    await this.page.waitForURL('**/index.html');
+    await this.page.waitForSelector('#login-button', { timeout: 10000 });
   }
 
   /**

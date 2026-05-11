@@ -142,9 +142,9 @@
 
 ---
 
-### ✅ TESTES DE API - RESTFUL-BOOKER (14 testes)
+### ✅ TESTES DE API - RESTFUL-BOOKER (16 testes)
 
-#### api-tests.js (14 testes)
+#### api-tests.js (16 testes)
 - [x] TC-API-AUTH-001: Get authentication token (L1)
 - [x] TC-API-CRUD-001: Create booking (L1)
 - [x] TC-API-CRUD-002: Get all bookings (L1)
@@ -159,13 +159,15 @@
 - [x] TC-API-FILTER-002: Filter by date range (L2)
 - [x] TC-API-FILTER-003: Test pagination (limit/offset) (L2)
 - [x] TC-API-HEALTH-001: Health check (GET /ping) (L2)
+- [x] TC-API-SEC-001: Block unauthenticated booking update (L2)
+- [x] TC-API-PERF-001: Health check response time under 2 seconds (L2)
 
 #### runner.js (executor)
 - [x] Test orchestration
 - [x] JSON report generation
 - [x] Summary statistics
 
-**TOTAL API**: ✅ 14 testes (8 L1 + 6 L2)
+**TOTAL API**: ✅ 16 testes (8 L1 + 8 L2)
 
 ---
 
@@ -179,16 +181,20 @@
   - [x] Delete: DELETE /booking/{id}
   - [x] Filters: GET /booking with filters
   - [x] Health: GET /ping
+  - [x] Security: PUT /booking/{id} sem autenticação
+  - [x] Performance: GET /ping com validação de tempo de resposta
   - [x] Tests in each request
   - [x] Variables configured
 
 - [x] `Restful-Booker.postman_environment.json` (30+ linhas)
   - [x] base_url variable
+  - [x] api_doc_url variable
+  - [x] ui_url variable
   - [x] auth_token variable
   - [x] booking_id variable
   - [x] username/password variables
 
-**TOTAL Postman**: ✅ 2 arquivos com 14 endpoints
+**TOTAL Postman**: ✅ 2 arquivos com requests e variáveis de API/UI
 
 ---
 
@@ -205,7 +211,7 @@
 
 - [x] `API-TEST-PLAN.md` (350+ linhas)
   - [x] Visão geral dos testes
-  - [x] 14 testes documentados
+  - [x] 16 testes documentados
   - [x] Exemplos de request/response
   - [x] HTTP status codes
   - [x] Dados de teste
@@ -362,19 +368,76 @@
 - [x] Validação de campos
 
 #### Nível 2 - Diferencial (API)
-- [x] Testes avançados
-- [x] Filtros e paginação
+- [x] Testes de performance
+- [x] Testes de segurança
 - [x] Automação JavaScript
 
 #### Requisitos Técnicos
 - [x] Documentação Markdown
-- [x] Collection Postman
-- [x] Evidências (screenshots)
+- [x] Collection em JSON (Postman)
+- [x] Evidências em screenshots e relatório HTML/JSON
+- [x] README detalhado com execução, premissas, ferramentas e links-alvo
 - [x] Playwright + JavaScript
 - [x] BDD/TDD
 - [x] Page Object Model
 
 **TOTAL Requisitos**: ✅ 100% completo
+
+---
+
+### ✅ ESTRUTURA DA DOCUMENTAÇÃO
+
+#### UI Testing
+- [x] Plano de testes: `docs/UI-TEST-PLAN.md`
+- [x] Casos de teste com resultados: `docs/UI-TEST-PLAN.md`, `test-results/ui-report/`
+- [x] Análise de bugs: `docs/BUG-ANALYSIS.md`
+- [x] Sugestões de melhorias: `docs/IMPROVEMENTS.md`
+- [x] Análise de riscos: `docs/RISKS-ANALYSIS.md`
+
+#### API Testing
+- [x] Collection de requests: `api-testing/collections/Restful-Booker.postman_collection.json`
+- [x] Documentação dos cenários: `docs/API-TEST-PLAN.md`
+- [x] Resultados dos testes: `api-testing/evidence/api-test-report.json`
+- [x] Análise de bugs: `docs/BUG-ANALYSIS.md`
+- [x] Variáveis de ambiente: `api-testing/environment/Restful-Booker.postman_environment.json`
+
+---
+
+### ✅ CENÁRIOS PRINCIPAIS
+
+#### UI Testing (Sauce Demo)
+- [x] Fluxo de autenticação
+- [x] Gerenciamento de produtos
+- [x] Processo de checkout
+- [x] Gestão do carrinho
+- [x] Navegação do site
+
+#### API Testing (Restful-Booker)
+- [x] Fluxo de autenticação
+- [x] Gestão de reservas
+- [x] Filtros e buscas
+- [x] Tratamento de erros
+- [x] Validações de dados
+
+---
+
+### ✅ CRITÉRIOS DE AVALIAÇÃO
+
+- [x] Capacidade analítica e pensamento crítico: bugs, riscos e melhorias documentados
+- [x] Organização e clareza dos testes: planos separados por UI/API e IDs padronizados
+- [x] Cobertura do nível obrigatório: UI L1 e API L1 implementados
+- [x] Diferenciais acrescentados: responsividade, acessibilidade, automação, segurança e performance
+- [x] Sugestões de melhorias e identificação de riscos: `docs/IMPROVEMENTS.md` e `docs/RISKS-ANALYSIS.md`
+- [x] Qualidade das evidências: screenshots, relatório Playwright e relatório JSON de API
+
+---
+
+### ✅ CONSIDERAÇÕES FINAIS
+
+- [x] O que foi construído está executável via `npm run test:ui`, `npm run test:api` e `npm run test:all`
+- [x] Dificuldades e limitações conhecidas estão documentadas como bugs/riscos
+- [x] Implementado: UI SauceDemo, API Restful-Booker, Postman Collection, relatórios e documentação
+- [x] Pendente: correção dos bugs encontrados nas aplicações testadas, que são sistemas externos ao desafio
 
 ---
 
@@ -409,7 +472,7 @@ desafio-BeTalent/
 ├────────────────────────────────────────┤
 │ Arquivos:                   30+ ✅     │
 │ Linhas de Código:          2,500+ ✅  │
-│ Testes:                      67 ✅     │
+│ Testes:                      69 ✅     │
 │ Cobertura:                  100% ✅    │
 │ Documentação:            2,000+ ✅     │
 │ Bugs Identificados:         13 ✅     │
@@ -427,10 +490,11 @@ desafio-BeTalent/
 ## 🎯 PRÓXIMOS PASSOS
 
 1. [x] Implementação: COMPLETO ✅
-2. [ ] Execução: `npm run test:all`
-3. [ ] Análise: Revisar relatórios
-4. [ ] GitHub: Criar repositório
-5. [ ] Submissão: Enviar link
+2. [x] Execução UI Chromium: `npm run test:ui:chrome` (53/53 passando)
+3. [x] Execução API: `npm run test:api` (16 testes, 14 pass, 2 bugs documentados)
+4. [x] Análise: Relatórios revisados e evidências geradas
+5. [ ] GitHub: Criar repositório
+6. [ ] Submissão: Enviar link
 
 ---
 

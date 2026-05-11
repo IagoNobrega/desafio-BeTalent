@@ -63,7 +63,7 @@ class CheckoutPage extends BasePage {
    */
   async clickContinue() {
     await this.click(this.continueButton);
-    await this.page.waitForSelector(this.finishButton, { timeout: 10000 });
+    await this.page.waitForSelector(`${this.finishButton}, ${this.errorMessage}`, { timeout: 10000 });
   }
 
   /**

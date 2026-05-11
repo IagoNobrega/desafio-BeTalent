@@ -1,5 +1,15 @@
 # 🚀 Guia Rápido de Execução
 
+## Links do desafio
+
+| Tipo | Link |
+|------|------|
+| API | https://restful-booker.herokuapp.com/apidoc/index.html |
+| API base URL | https://restful-booker.herokuapp.com |
+| UI/UX | https://www.saucedemo.com/ |
+
+Os testes de UI usam o SauceDemo. Os testes de API usam a Restful-Booker.
+
 ## ⚡ Quick Start (5 minutos)
 
 ### 1️⃣ Instalação Rápida
@@ -134,10 +144,10 @@ navigation.spec.js  (10 testes)
 └── TC-NAV-010 ✅
 ```
 
-### API Tests (14 total)
+### API Tests (16 total)
 
 ```
-api-tests.js        (14 testes)
+api-tests.js        (16 testes)
 ├── TC-API-AUTH-001 ✅
 ├── TC-API-CRUD-001 ✅
 ├── TC-API-CRUD-002 ✅
@@ -151,7 +161,9 @@ api-tests.js        (14 testes)
 ├── TC-API-FILTER-001 ✅
 ├── TC-API-FILTER-002 ✅
 ├── TC-API-FILTER-003 ✅
-└── TC-API-HEALTH-001 ✅
+├── TC-API-HEALTH-001 ✅
+├── TC-API-SEC-001 ✅
+└── TC-API-PERF-001 ✅
 ```
 
 ---
@@ -280,13 +292,13 @@ Após execução bem-sucedida:
    - Tempo: 15-20 minutos
 
 ✅ API Testing
-   - Total: 14 testes
-   - Pass: 14 (100%)
-   - Fail: 0
+   - Total: 16 testes
+   - Pass: 14+ (bugs conhecidos podem falhar)
+   - Fail: 0-2
    - Tempo: 2-3 minutos
 
 📊 TOTAL
-   - Testes: 67
+   - Testes: 69
    - Pass Rate: 95%+
    - Tempo: 20-25 minutos
 ```

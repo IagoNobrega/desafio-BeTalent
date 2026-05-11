@@ -4,9 +4,9 @@
 
 Durante a execução dos testes de UI e API, foram identificados os seguintes bugs:
 
-- **Total de Bugs**: 12
+- **Total de Bugs**: 13
 - **Críticos**: 2
-- **Altos**: 5
+- **Altos**: 6
 - **Médios**: 4
 - **Baixos**: 1
 
@@ -414,6 +414,25 @@ Paginação não retorna resultados em ordem consistente.
 
 ---
 
+### 🟠 BUG-API-006 | Totalprice Aceita Valor Não Numérico
+
+**Severidade**: 🟠 ALTA (P1)
+
+**Endpoint**: POST /booking
+
+**Descrição**:
+Durante a execução em `https://restful-booker.herokuapp.com`, a API aceitou `totalprice` como string inválida e retornou status `200`.
+
+**Resultado Atual**:
+API cria a reserva mesmo quando `totalprice` não é numérico.
+
+**Resultado Esperado**:
+API deve rejeitar o request com erro 400 ou normalizar o valor de forma explícita e documentada.
+
+**Status**: 🔴 NÃO RESOLVIDO
+
+---
+
 ## Sumário de Bugs por Componente
 
 | Componente | Críticos | Altos | Médios | Baixos |
@@ -423,8 +442,8 @@ Paginação não retorna resultados em ordem consistente.
 | Cart | 0 | 1 | 1 | 0 |
 | Checkout | 0 | 1 | 0 | 0 |
 | Responsividade | 0 | 0 | 1 | 0 |
-| API - Booking | 2 | 2 | 3 | 0 |
-| **TOTAL** | **3** | **5** | **6** | **1** |
+| API - Booking | 2 | 3 | 3 | 0 |
+| **TOTAL** | **3** | **6** | **6** | **1** |
 
 ---
 

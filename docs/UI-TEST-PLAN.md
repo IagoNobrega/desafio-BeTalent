@@ -6,6 +6,8 @@ Este documento detalha o plano completo de testes de UI para a plataforma Sauce 
 
 **URL da Aplicação**: https://www.saucedemo.com
 
+Todos os testes de UI/UX deste desafio devem ser executados no SauceDemo. O código usa `UI_BASE_URL` quando informado; caso contrário, usa `https://www.saucedemo.com`.
+
 **Ambiente**: Produção
 
 **Data de Criação**: 15 de Janeiro de 2024

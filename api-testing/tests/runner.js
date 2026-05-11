@@ -14,6 +14,8 @@ async function runTests() {
   // Generate report
   const report = {
     title: 'Restful-Booker API Test Report',
+    baseUrl: process.env.API_BASE_URL || 'https://restful-booker.herokuapp.com',
+    apiDocumentation: 'https://restful-booker.herokuapp.com/apidoc/index.html',
     timestamp: new Date().toISOString(),
     totalTests: results.length,
     passedTests: results.filter(r => r.passed).length,

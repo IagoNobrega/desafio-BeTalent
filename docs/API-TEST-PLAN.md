@@ -6,6 +6,10 @@ Este documento detalha o plano completo de testes para a API Restful-Booker, um 
 
 **URL da API**: https://restful-booker.herokuapp.com
 
+**Documentação oficial usada como referência**: https://restful-booker.herokuapp.com/apidoc/index.html
+
+Todos os testes de API deste desafio devem usar a Restful-Booker. O código usa `API_BASE_URL` quando informado; caso contrário, usa `https://restful-booker.herokuapp.com`.
+
 **Versão da API**: v1
 
 **Data de Criação**: 15 de Janeiro de 2024
@@ -325,6 +329,33 @@ Ping Created.
 
 ---
 
+### 4.6 Segurança
+
+#### TC-API-SEC-001 | Bloquear Atualização Sem Autenticação
+- **Endpoint**: PUT /booking/{id}
+- **Objetivo**: Validar que alteração de reserva exige token
+- **Teste**: Enviar PUT sem header `Cookie: token={auth_token}`
+- **Resultado Esperado**:
+  - ✅ Status Code: 403
+  - ✅ Reserva não é alterada
+- **Prioridade**: P1 (Alta)
+- **Status**: ✅ Implementado
+
+---
+
+### 4.7 Performance
+
+#### TC-API-PERF-001 | Health Check Abaixo de 2 Segundos
+- **Endpoint**: GET /ping
+- **Objetivo**: Validar resposta básica da API dentro de um tempo aceitável
+- **Resultado Esperado**:
+  - ✅ Status Code: 201
+  - ✅ Tempo de resposta menor que 2000ms
+- **Prioridade**: P2 (Média)
+- **Status**: ✅ Implementado
+
+---
+
 ## 5. Estrutura de Requests e Responses
 
 ### Headers Padrão
@@ -403,6 +434,13 @@ password: password123
 3. Filtrar por datas
 4. Usar paginação
 
+### Scenario 4: Segurança e Performance
+
+1. Criar uma reserva para teste
+2. Tentar atualizar sem token de autenticação
+3. Validar bloqueio com status 403
+4. Medir tempo de resposta do health check
+
 ---
 
 ## 8. Critérios de Aceitação
@@ -422,7 +460,9 @@ password: password123
 - ✅ 3 testes de validação
 - ✅ 3 testes de filtros
 - ✅ 1 teste de health check
-- **Total: 14 testes**
+- ✅ 1 teste de segurança
+- ✅ 1 teste de performance
+- **Total: 16 testes**
 
 ### Documentação
 
@@ -445,6 +485,7 @@ password: password123
 | PUT /booking/{id} | 200 | OK |
 | PATCH /booking/{id} | 200 | OK |
 | DELETE /booking/{id} | 201 | Created |
+| PUT /booking/{id} sem token | 403 | Forbidden |
 | GET /booking (sem resultados) | 200 | OK (array vazio) |
 
 ---
@@ -507,9 +548,9 @@ password: password123
 
 | Métrica | Valor |
 |---------|-------|
-| Total de Testes | 14 |
+| Total de Testes | 16 |
 | Endpoints Testados | 8 |
-| Cenários de Teste | 3 |
+| Cenários de Teste | 4 |
 | Cobertura de Funcionalidades | 100% |
 | Tempo Estimado de Execução | 2-3 minutos |
 

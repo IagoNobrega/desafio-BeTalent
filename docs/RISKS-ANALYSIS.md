@@ -319,7 +319,7 @@ Estrutura de resposta pode mudar:
 **Descrição**: 
 Tempo limitado para completar testes:
 - 53 testes de UI
-- 14 testes de API
+- 16 testes de API
 - Documentação completa requerida
 
 **Mitigação**:

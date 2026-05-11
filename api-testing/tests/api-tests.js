@@ -11,9 +11,14 @@
 const axios = require('axios');
 const assert = require('assert');
 
-const BASE_URL = 'https://restful-booker.herokuapp.com';
+const BASE_URL = process.env.API_BASE_URL || 'https://restful-booker.herokuapp.com';
+const API_DOC_URL = 'https://restful-booker.herokuapp.com/apidoc/index.html';
 const API = axios.create({
   baseURL: BASE_URL,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  },
   timeout: 10000,
   validateStatus: () => true // Don't throw on any status
 });
@@ -50,7 +55,7 @@ class APITester {
         password: 'password123'
       });
 
-      const passed = response.status === 200 && response.data.token;
+      const passed = response.status === 200 && Boolean(response.data.token);
       this.logResult(
         'TC-API-AUTH-001 | Should get auth token',
         passed,
@@ -163,6 +168,43 @@ class APITester {
     } catch (error) {
       this.logResult(
         'TC-API-CRUD-003 | Should get booking by ID',
+        false,
+        error.message
+      );
+      return false;
+    }
+  }
+
+  /**
+   * Test: Block unauthorized update
+   */
+  async testUnauthorizedUpdateBlocked() {
+    try {
+      const bookingData = {
+        firstname: 'Unauthorized',
+        lastname: 'User',
+        totalprice: 999,
+        depositpaid: false,
+        bookingdates: {
+          checkin: '2024-01-01',
+          checkout: '2024-01-08'
+        },
+        additionalneeds: 'Security test'
+      };
+
+      const response = await API.put(`/booking/${this.bookingId}`, bookingData);
+      const passed = response.status === 403;
+
+      this.logResult(
+        'TC-API-SEC-001 | Should block unauthenticated booking update',
+        passed,
+        `Status: ${response.status}`
+      );
+
+      return passed;
+    } catch (error) {
+      this.logResult(
+        'TC-API-SEC-001 | Should block unauthenticated booking update',
         false,
         error.message
       );
@@ -448,6 +490,33 @@ class APITester {
   }
 
   /**
+   * Test: Basic API response time
+   */
+  async testResponseTime() {
+    try {
+      const startTime = Date.now();
+      const response = await API.get('/ping');
+      const responseTime = Date.now() - startTime;
+      const passed = response.status === 201 && responseTime < 2000;
+
+      this.logResult(
+        'TC-API-PERF-001 | Should respond to health check under 2 seconds',
+        passed,
+        `Status: ${response.status}, Response time: ${responseTime}ms`
+      );
+
+      return passed;
+    } catch (error) {
+      this.logResult(
+        'TC-API-PERF-001 | Should respond to health check under 2 seconds',
+        false,
+        error.message
+      );
+      return false;
+    }
+  }
+
+  /**
    * Test: Invalid Price Format
    */
   async testInvalidPriceFormat() {
@@ -523,7 +592,9 @@ class APITester {
    * Run all tests
    */
   async runAllTests() {
-    console.log('\n🧪 RUNNING API TESTS - Restful-Booker\n');
+    console.log('\nRUNNING API TESTS - Restful-Booker\n');
+    console.log(`Base URL: ${BASE_URL}`);
+    console.log(`API docs: ${API_DOC_URL}`);
     console.log('=' .repeat(60));
 
     // Authentication
@@ -535,6 +606,11 @@ class APITester {
     await this.testCreateBooking();
     await this.testGetAllBookings();
     await this.testGetBookingById();
+
+    // Security
+    console.log('\nSecurity Tests:');
+    await this.testUnauthorizedUpdateBlocked();
+
     await this.testUpdateBooking();
     await this.testPartialUpdateBooking();
     await this.testDeleteBooking();
@@ -554,6 +630,10 @@ class APITester {
     // Health Check
     console.log('\n📋 Health Check:');
     await this.testAPIHealth();
+
+    // Performance
+    console.log('\nPerformance Tests:');
+    await this.testResponseTime();
 
     // Summary
     this.printSummary();

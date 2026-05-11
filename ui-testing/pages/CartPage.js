@@ -88,6 +88,15 @@ class CartPage extends BasePage {
       const text = await total.textContent();
       return text;
     }
+
+    const prices = await this.page.$$eval(
+      '.inventory_item_price',
+      items => items.map(item => Number(item.textContent.replace('$', '')))
+    );
+    if (prices.length > 0) {
+      const sum = prices.reduce((acc, price) => acc + price, 0);
+      return `$${sum.toFixed(2)}`;
+    }
     return null;
   }
 
