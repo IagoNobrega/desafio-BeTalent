@@ -493,7 +493,7 @@ desafio-BeTalent/
 2. [x] Execução UI Chromium: `npm run test:ui:chrome` (53/53 passando)
 3. [x] Execução API: `npm run test:api` (16 testes, 14 pass, 2 bugs documentados)
 4. [x] Análise: Relatórios revisados e evidências geradas
-5. [ ] GitHub: Criar repositório
+5. [x] GitHub: Criar repositório
 6. [ ] Submissão: Enviar link
 
 ---
@@ -513,5 +513,5 @@ desafio-BeTalent/
 ---
 
 **Desafio BeTalent QA**  
-**Data**: 15 de Janeiro de 2024  
+**Data**: 11 de Maio de 2026 
 **Desenvolvido com ❤️**

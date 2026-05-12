@@ -420,5 +420,5 @@ npm run report          # Ver relatório
 ---
 
 **Desenvolvido para o Desafio BeTalent QA**  
-**Data**: 15 de Janeiro de 2024  
+**Data**: 11 de Maio de 2026  
 **Status**: ✅ PRONTO PARA PRODUÇÃO
