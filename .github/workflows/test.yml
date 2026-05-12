@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ main, develop ]
   schedule:
-    - cron: '0 8 * * MON-FRI' # Executar segunda a sexta às 8:00
+    - cron: '0 8 * * MON-FRI'
 
 jobs:
   test-ui:
@@ -20,10 +20,10 @@ jobs:
     
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4        # ✅ v3 → v4
       
       - name: 📦 Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4      # ✅ v3 → v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
@@ -42,7 +42,7 @@ jobs:
       
       - name: 📊 Upload UI Test Results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ui-test-results
           path: |
@@ -52,7 +52,7 @@ jobs:
       
       - name: 📸 Upload Screenshots
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ui-screenshots-failure
           path: ui-testing/evidence/
@@ -69,10 +69,10 @@ jobs:
     
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4        # ✅ v3 → v4
       
       - name: 📦 Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4      # ✅ v3 → v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
@@ -88,7 +88,7 @@ jobs:
       
       - name: 📊 Upload API Test Results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: api-test-results
           path: api-testing/evidence/
@@ -102,10 +102,10 @@ jobs:
     
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4        # ✅ v3 → v4
       
       - name: 📦 Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4      # ✅ v3 → v4
         with:
           node-version: '18.x'
           cache: 'npm'
@@ -114,7 +114,7 @@ jobs:
         run: npm install
       
       - name: 📊 Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       
       - name: 📝 Create summary
         run: |
@@ -130,7 +130,7 @@ jobs:
       
       - name: 💬 Comment on PR
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7   # ✅ v6 → v7
         with:
           script: |
             github.rest.issues.createComment({
@@ -146,10 +146,10 @@ jobs:
     
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4        # ✅ v3 → v4
       
       - name: 📦 Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4      # ✅ v3 → v4
         with:
           node-version: '18.x'
           cache: 'npm'
