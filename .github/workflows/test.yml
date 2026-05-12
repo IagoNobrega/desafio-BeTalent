@@ -42,7 +42,7 @@ jobs:
       
       - name: 📊 Upload UI Test Results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ui-test-results
           path: |
@@ -52,7 +52,7 @@ jobs:
       
       - name: 📸 Upload Screenshots
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ui-screenshots-failure
           path: ui-testing/evidence/
@@ -88,7 +88,7 @@ jobs:
       
       - name: 📊 Upload API Test Results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: api-test-results
           path: api-testing/evidence/
