@@ -100,6 +100,11 @@ jobs:
     needs: [test-ui, test-api]
     if: always()
     
+    permissions:               # ✅ adicionar essas 3 linhas
+      issues: write
+      pull-requests: write
+      contents: read
+ 
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4        # ✅ v3 → v4
