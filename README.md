@@ -386,7 +386,275 @@ Os testes são estruturados com comentários BDD:
 
 ---
 
-## 🔧 Troubleshooting
+## � CI/CD Integration
+
+### Configuração de Pipeline
+
+Este projeto está pronto para integração com pipelines de CI/CD. Adicione os seguintes passos ao seu workflow:
+
+#### GitHub Actions Exemplo
+
+```yaml
+name: BeTalent QA Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Install Playwright
+        run: npx playwright install
+      
+      - name: Run UI Tests
+        run: npm run test:ui
+      
+      - name: Run API Tests
+        run: npm run test:api
+      
+      - name: Upload Reports
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: |
+            test-results/
+            api-testing/evidence/
+```
+
+#### Jenkins Pipeline Exemplo
+
+```groovy
+pipeline {
+    agent any
+    
+    stages {
+        stage('Setup') {
+            steps {
+                sh 'npm install'
+                sh 'npx playwright install'
+            }
+        }
+        
+        stage('UI Tests') {
+            steps {
+                sh 'npm run test:ui'
+            }
+        }
+        
+        stage('API Tests') {
+            steps {
+                sh 'npm run test:api'
+            }
+        }
+        
+        stage('Archive Reports') {
+            steps {
+                archiveArtifacts artifacts: '**/test-results/**, **/evidence/**'
+            }
+        }
+    }
+}
+```
+
+### Variáveis de Ambiente para CI/CD
+
+```bash
+# Para CI/CD, configure:
+CI=true
+PLAYWRIGHT_HEADLESS=true
+PLAYWRIGHT_WORKERS=2
+API_BASE_URL=https://restful-booker.herokuapp.com
+UI_BASE_URL=https://www.saucedemo.com
+```
+
+---
+
+## 🐛 Bugs Encontrados
+
+### Resumo de Bugs Identificados
+
+Durante a execução dos testes foram identificados **13 bugs** nas aplicações testadas:
+
+#### Críticos (3)
+- **BUG-UI-001**: Performance degradada para usuário `performance_glitch_user`
+- **BUG-UI-002**: Imagens distorcidas para usuário `problem_user`
+- **BUG-API-002**: API aceita `checkout` antes de `checkin`
+
+#### Altos (5)
+- **BUG-UI-003**: Carrinho não persiste após logout
+- **BUG-UI-004**: Campo de Postal Code sem validação
+- **BUG-UI-005**: Sem confirmação ao remover itens
+- **BUG-API-001**: Sem limite de caracteres em `additionalneeds`
+- **BUG-API-003**: Sem rate limiting na API
+
+#### Médios (4)
+- **BUG-UI-006**: Ordenação não persiste ao navegar
+- **BUG-UI-007**: Footer não visível em mobile
+- **BUG-UI-008**: Mensagens de erro genéricas
+- **BUG-API-005**: Paginação sem ordem consistente
+
+#### Baixos (1)
+- **BUG-API-004**: Token não expira
+
+### Documentação Completa
+
+Veja análise detalhada em:
+- [📄 BUG-ANALYSIS.md](./docs/BUG-ANALYSIS.md) - Descrição completa de cada bug
+- [📊 RISKS-ANALYSIS.md](./docs/RISKS-ANALYSIS.md) - Riscos associados
+- [💡 IMPROVEMENTS.md](./docs/IMPROVEMENTS.md) - Sugestões de correção
+
+### Como Reportar Novos Bugs
+
+1. Execute o teste que reproduz o bug
+2. Capture screenshot automaticamente em `ui-testing/evidence/`
+3. Documente em `docs/BUG-ANALYSIS.md`
+4. Inclua em issue/ticket com severidade
+
+---
+
+## 📖 BDD (Behavior-Driven Development)
+
+### Estrutura BDD nos Testes
+
+Todos os testes seguem o padrão **Given-When-Then** para máxima legibilidade:
+
+```javascript
+test('TC-AUTH-001 | Should login successfully', async ({ page }) => {
+  // Given - Contexto inicial
+  // O usuário está na página de login do SauceDemo
+  const loginPage = new LoginPage(page);
+  expect(await loginPage.isLoginPageLoaded()).toBeTruthy();
+
+  // When - Ação executada
+  // O usuário insere credenciais válidas e clica em login
+  await loginPage.login('standard_user', 'secret_sauce');
+
+  // Then - Resultado esperado
+  // O usuário é redirecionado para a página de produtos
+  expect(await page.isVisible('.inventory_container')).toBeTruthy();
+});
+```
+
+### Benefícios do BDD Utilizado
+
+✅ **Legibilidade**: Testes são claros e autoexplicativos  
+✅ **Manutenibilidade**: Fácil entender a lógica do teste  
+✅ **Documentação Viva**: Testes servem como documentação  
+✅ **Alinhamento de Negócio**: Facilita comunicação com stakeholders  
+✅ **Rastreabilidade**: Requisitos → Testes → Bugs  
+
+### Comentários BDD nos Testes
+
+Cada teste contém comentários estruturados:
+
+```javascript
+// Given - O que já existe (precondição)
+// When - Que ação vamos executar (ação)
+// Then - O que esperamos que aconteça (resultado)
+```
+
+### Exemplos de Testes BDD
+
+#### Exemplo 1: Teste de Autenticação
+```javascript
+test('TC-AUTH-004 | Should show error for invalid password', async ({ page }) => {
+  // Given: Usuário está na página de login
+  const loginPage = new LoginPage(page);
+  
+  // When: Digita username válido e password inválido
+  await loginPage.login('standard_user', 'wrong_password');
+  
+  // Then: Mensagem de erro é exibida
+  expect(await loginPage.isErrorVisible()).toBeTruthy();
+  expect(await loginPage.getErrorMessage()).toContain('do not match');
+});
+```
+
+#### Exemplo 2: Teste de Ordenação
+```javascript
+test('TC-PROD-002 | Should sort products A to Z', async ({ page }) => {
+  // Given: Usuário está na página de produtos
+  const productsPage = new ProductsPage(page);
+  
+  // When: Seleciona ordenação A-Z
+  await productsPage.sortProducts('az');
+  
+  // Then: Produtos aparecem em ordem alfabética
+  const names = await productsPage.getProductNames();
+  expect(names).toEqual([...names].sort());
+});
+```
+
+#### Exemplo 3: Teste de API
+```javascript
+test('Create booking with valid data', async () => {
+  // Given: Dados válidos de reserva
+  const bookingData = {
+    firstname: 'John',
+    lastname: 'Doe',
+    totalprice: 111,
+    depositpaid: true,
+    bookingdates: {
+      checkin: '2024-01-01',
+      checkout: '2024-01-08'
+    }
+  };
+  
+  // When: Envia POST /booking
+  const response = await axios.post(`${BASE_URL}/booking`, bookingData);
+  
+  // Then: Resposta contém booking ID
+  expect(response.status).toBe(200);
+  expect(response.data).toHaveProperty('bookingid');
+});
+```
+
+### Cenários BDD Cobertos
+
+| Cenário | Tipo | Testes |
+|---------|------|--------|
+| Autenticação | BDD | 6 cenários |
+| Produtos | BDD | 8 cenários |
+| Carrinho | BDD | 7 cenários |
+| Checkout | BDD | 7 cenários |
+| Navegação | BDD | 5 cenários |
+| API CRUD | BDD | 6 cenários |
+| Validações | BDD | 4 cenários |
+
+### Boas Práticas BDD Implementadas
+
+✅ Dado-Quando-Então em cada teste  
+✅ Descrições legíveis em linguagem natural  
+✅ Separação clara de precondição, ação, resultado  
+✅ Testes independentes sem acoplamento  
+✅ Nomenclatura descritiva (TC-MODULO-NUMERO)  
+✅ Comentários estruturados no código  
+
+### Executar Testes com Saída BDD
+
+```bash
+# Modo verbose mostrando cenários BDD
+npm run test:ui -- --reporter=list
+
+# Modo debug para entender fluxo
+npm run test:ui:debug
+```
+
+---
+
+## �🔧 Troubleshooting
 
 ### Problema: Testes não encontram o elemento
 **Solução**: Verifique se o seletor CSS está correto e se a página carregou completamente.
@@ -417,7 +685,7 @@ MIT License - Veja o arquivo LICENSE para detalhes.
 
 ---
 
-## 👤 Autor
+## 👤 Autor: Iago Nobrega 
 
 **Desenvolvido para o Desafio BeTalent QA**
 
@@ -425,7 +693,7 @@ MIT License - Veja o arquivo LICENSE para detalhes.
 
 ## 📅 Data da Execução
 
-Projeto criado em: **11 de Maio de 2026**
+Projeto criado em: **11fit de Maio de 2026**
 
 ---
 
