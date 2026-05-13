@@ -77,6 +77,7 @@ Sistema de reservas com testes de:
 **Nível 2 (Diferencial)**
 - Testes de responsividade
 - Testes de acessibilidade
+- Testes de performance de login
 - Testes automatizados
 
 ### API Testing (Restful-Booker)
@@ -693,7 +694,7 @@ MIT License - Veja o arquivo LICENSE para detalhes.
 
 ## 📅 Data da Execução
 
-Projeto criado em: **11fit de Maio de 2026**
+Projeto criado em: **11 de Maio de 2026**
 
 ---
 

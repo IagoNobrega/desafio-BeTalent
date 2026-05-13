@@ -12,7 +12,7 @@ Todos os testes de API deste desafio devem usar a Restful-Booker. O código usa 
 
 **Versão da API**: v1
 
-**Data de Criação**: 15 de Janeiro de 2024
+**Data de Criação**: 11 de Maio de 2026
 
 ---
 

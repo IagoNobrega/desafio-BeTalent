@@ -68,6 +68,18 @@ test.describe('🔐 Authentication Tests', () => {
     await loginPage.takeScreenshot('auth-003-performance-user-login.png');
   });
 
+  test('TC-AUTH-007 | Should measure login performance for performance glitch user', async ({ page }) => {
+    const start = Date.now();
+    await loginPage.login('performance_glitch_user', 'secret_sauce');
+    const elapsed = Date.now() - start;
+
+    expect(await loginPage.isVisible('.inventory_container')).toBeTruthy();
+    expect(elapsed).toBeLessThan(12000);
+
+    console.log(`TC-AUTH-007 | Performance login time: ${elapsed}ms`);
+    await loginPage.takeScreenshot('auth-007-performance-login-timing.png');
+  });
+
   test('TC-AUTH-004 | Should show error with invalid password', async ({ page }) => {
     // Scenario: Invalid password
     // Given I am on the login page
