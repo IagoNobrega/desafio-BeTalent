@@ -10,7 +10,7 @@ Todos os testes de UI/UX deste desafio devem ser executados no SauceDemo. O cód
 
 **Ambiente**: Produção
 
-**Data de Criação**: 11 de Maio de 2026
+**Data de Criação**: 15 de Maio de 2026
 
 ---
 

@@ -372,11 +372,11 @@ MIT License - Veja LICENSE para detalhes
 
 ---
 
-## 👤 Autor
+## 👤 Autor : Iago Nobrega
 
 Desenvolvido para o Desafio BeTalent QA
 
-**Data**: 11 de Maio de 2026
+**Data**: 15 de Maio de 2026
 
 **Status**: ✅ Pronto para Produção
 
